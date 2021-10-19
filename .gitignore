@@ -94,6 +94,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+valo/
+.valo
 
 # Spyder project settings
 .spyderproject
@@ -112,3 +114,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#transformers
+transformers/
+
+#file
+attacks.csv
