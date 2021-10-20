@@ -1,0 +1,32 @@
+- step:
+    name: fetch_data
+    image: pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime
+    command: python fecth_data.py
+    inputs:
+    - name: attacks
+      default: datum://017c9ddc-ce57-672e-9358-50a2ffb9115e
+      optional: false
+- step:
+    name: pre_process
+    image: pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime
+    command: python pre_process.py
+    inputs:
+    - name: attacksmini
+      optional: true
+- pipeline:
+    name: mypipeline
+    edges:
+    - configuration: {}
+      source: fetch_data_1.output.*
+      target: pre_process_1.input.attacksmini
+    nodes:
+    - name: fetch_data_1
+      actions: []
+      override: {}
+      step: fetch_data
+      type: execution
+    - name: pre_process_1
+      actions: []
+      override: {}
+      step: pre_process
+      type: execution

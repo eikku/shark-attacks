@@ -1,1 +1,3 @@
+pandas
+valohai-utils
 transformers

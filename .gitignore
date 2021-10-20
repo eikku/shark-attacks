@@ -119,4 +119,4 @@ dmypy.json
 transformers/
 
 #file
-attacks.csv
+*.csv
