@@ -7,11 +7,33 @@
       default: datum://017c9ddc-ce57-672e-9358-50a2ffb9115e
       optional: false
 - step:
+    name: fine_tune
+    image: python:3.7
+    command:
+    - pip install -r requirements.txt
+    - python ./fine_tune.py {parameters}
+    inputs:
+    - name: train_dataset
+      optional: true
+    - name: val_dataset
+      optional: true
+    - name: test_dataset
+      optional: true
+- step:
     name: pre_process
     image: pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime
     command: python pre_process.py
     inputs:
     - name: attacksmini
+      optional: true
+- step:
+    name: tokenize_text
+    image: python:3.7
+    command:
+    - pip install -r requirements.txt
+    - python ./tokenize_text.py {parameters}
+    inputs:
+    - name: attacksminiprocessed
       optional: true
 - pipeline:
     name: mypipeline
@@ -19,6 +41,18 @@
     - configuration: {}
       source: fetch_data_1.output.*
       target: pre_process_1.input.attacksmini
+    - configuration: {}
+      source: pre_process_1.output.*
+      target: tokenize_text_1.input.attacksminiprocessed
+    - configuration: {}
+      source: tokenize_text_1.output.*
+      target: fine_tune_1.input.train_dataset
+    - configuration: {}
+      source: tokenize_text_1.output.*
+      target: fine_tune_1.input.val_dataset
+    - configuration: {}
+      source: tokenize_text_1.output.*
+      target: fine_tune_1.input.test_dataset
     nodes:
     - name: fetch_data_1
       actions: []
@@ -29,4 +63,14 @@
       actions: []
       override: {}
       step: pre_process
+      type: execution
+    - name: tokenize_text_1
+      actions: []
+      override: {}
+      step: tokenize_text
+      type: execution
+    - name: fine_tune_1
+      actions: []
+      override: {}
+      step: fine_tune
       type: execution
