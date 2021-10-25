@@ -5,6 +5,7 @@ import valohai
 from transformers import DistilBertConfig, DistilBertTokenizerFast
 import torch
 from sklearn.model_selection import train_test_split
+import pickle
 
 inputs = {"attacksminiprocessed":[]}
 valohai.prepare(step="tokenize_text", default_inputs=inputs)
@@ -20,7 +21,8 @@ attacks=attacks[attacks.Species.isin(mostcommon['index'])]
 #attacks.head(50)
 # Transform your output to numeric
 attacks['Species_int'] = attacks['Species'].cat.codes
-#my_dict=attacks[['Species','Species2']].to_dict('dict')
+my_dict=attacks[['Species','Species_int']].to_dict('dict')
+
 
 df=attacks[['Injury','Species','Species_int']]
 
@@ -47,34 +49,27 @@ val_encodings = tokenizer(val['Injury'].to_list(), truncation=True, padding=True
 test_encodings = tokenizer(test['Injury'].to_list(), truncation=True, padding=True)
 
 
-class my_Dataset(torch.utils.data.Dataset):
-    def __init__(self, encodings, labels):
-        self.encodings = encodings
-        self.labels = labels
-
-    def __getitem__(self, idx):
-        item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
-        item['labels'] = torch.tensor(self.labels[idx])
-        return item
-
-    def __len__(self):
-        return len(self.labels)
-
-train_dataset = my_Dataset(train_encodings, train['Species_int'].to_list())
-val_dataset = my_Dataset(val_encodings, val['Species_int'].to_list())
-test_dataset = my_Dataset(test_encodings, test['Species_int'].to_list())
-
-
 #save dict for further use
-output_path = 'my_dict'
-model.save(output_path)
+with open('my_dict.dictionary', 'wb') as config_dictionary_file:
+    pickle.dump(my_dict, config_dictionary_file)
 
 #save data
-path = valohai.outputs('train_dataset').path('train_dataset')
-train_dataset.save(path)
+with open('train_encodings', 'wb') as train_encodings_file:
+    pickle.dump(train_encodings, train_encodings_file)
 
-path = valohai.outputs('val_dataset').path('val_dataset')
-val_dataset.save(path)
+with open('val_encodings', 'wb') as val_encodings_file:
+    pickle.dump(val_encodings, val_encodings_file)
 
-path = valohai.outputs('test_dataset').path('test_dataset')
-test_dataset.save(path)
+with open('test_encodings', 'wb') as test_encodings_file:
+    pickle.dump(test_encodings, test_encodings_file)
+
+
+
+out_path = valohai.outputs().path('train.csv')
+train.to_csv(out_path)
+
+out_path = valohai.outputs().path('test.csv')
+test.to_csv(out_path)
+
+out_path = valohai.outputs().path('val.csv')
+val.to_csv(out_path)

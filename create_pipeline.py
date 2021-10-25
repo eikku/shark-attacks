@@ -3,7 +3,7 @@ from valohai import Pipeline
 def main(config) -> Pipeline:
 
     #Create a pipeline called "mypipeline".
-    pipe = Pipeline(name="mypipeline", config=config)
+    pipe = Pipeline(name="sharkpipe", config=config)
 
     # Define the pipeline nodes.
     fetch = pipe.execution("fetch_data")

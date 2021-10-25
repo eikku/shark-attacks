@@ -74,3 +74,42 @@
       override: {}
       step: fine_tune
       type: execution
+- pipeline:
+    name: sharkpipe
+    edges:
+    - configuration: {}
+      source: fetch_data.output.*
+      target: pre_process.input.attacksmini
+    - configuration: {}
+      source: pre_process.output.*
+      target: tokenize_text.input.attacksminiprocessed
+    - configuration: {}
+      source: tokenize_text.output.*
+      target: fine_tune.input.train_dataset
+    - configuration: {}
+      source: tokenize_text.output.*
+      target: fine_tune.input.val_dataset
+    - configuration: {}
+      source: tokenize_text.output.*
+      target: fine_tune.input.test_dataset
+    nodes:
+    - name: fetch_data
+      actions: []
+      override: {}
+      step: fetch_data
+      type: execution
+    - name: pre_process
+      actions: []
+      override: {}
+      step: pre_process
+      type: execution
+    - name: tokenize_text
+      actions: []
+      override: {}
+      step: tokenize_text
+      type: execution
+    - name: fine_tune
+      actions: []
+      override: {}
+      step: fine_tune
+      type: execution
