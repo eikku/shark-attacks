@@ -2,6 +2,7 @@
     name: fetch_data
     image: pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime
     command: python fecth_data.py
+    - pip install -r requirements.txt
     inputs:
     - name: attacks
       default: datum://017c9ddc-ce57-672e-9358-50a2ffb9115e
@@ -29,6 +30,7 @@
     name: pre_process
     image: pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime
     command: python pre_process.py
+    - pip install -r requirements.txt
     inputs:
     - name: attacksmini
       optional: true
