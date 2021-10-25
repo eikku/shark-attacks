@@ -1,8 +1,9 @@
 - step:
     name: fetch_data
-    image: pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime
-    command: python fecth_data.py
+    image: python:3.7
+    command:
     - pip install -r requirements.txt
+    - python ./fecth_data.py {parameters}
     inputs:
     - name: attacks
       default: datum://017c9ddc-ce57-672e-9358-50a2ffb9115e
@@ -28,9 +29,10 @@
       optional: true
 - step:
     name: pre_process
-    image: pytorch/pytorch:1.5.1-cuda10.1-cudnn7-runtime
-    command: python pre_process.py
+    image: python:3.7
+    command:
     - pip install -r requirements.txt
+    - python ./pre_process.py {parameters}
     inputs:
     - name: attacksmini
       optional: true
@@ -43,45 +45,6 @@
     inputs:
     - name: attacksminiprocessed
       optional: true
-- pipeline:
-    name: mypipeline
-    edges:
-    - configuration: {}
-      source: fetch_data.output.*
-      target: pre_process.input.attacksmini
-    - configuration: {}
-      source: pre_process.output.*
-      target: tokenize_text.input.attacksminiprocessed
-    - configuration: {}
-      source: tokenize_text.output.*
-      target: fine_tune.input.train_dataset
-    - configuration: {}
-      source: tokenize_text.output.*
-      target: fine_tune.input.val_dataset
-    - configuration: {}
-      source: tokenize_text.output.*
-      target: fine_tune.input.test_dataset
-    nodes:
-    - name: fetch_data
-      actions: []
-      override: {}
-      step: fetch_data
-      type: execution
-    - name: pre_process
-      actions: []
-      override: {}
-      step: pre_process
-      type: execution
-    - name: tokenize_text
-      actions: []
-      override: {}
-      step: tokenize_text
-      type: execution
-    - name: fine_tune
-      actions: []
-      override: {}
-      step: fine_tune
-      type: execution
 - pipeline:
     name: sharkpipe
     edges:
