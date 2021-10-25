@@ -64,7 +64,6 @@ with open('test_encodings', 'wb') as test_encodings_file:
     pickle.dump(test_encodings, test_encodings_file)
 
 
-
 out_path = valohai.outputs().path('train.csv')
 train.to_csv(out_path)
 
