@@ -6,7 +6,7 @@ import pandas as pd
 from transformers import DistilBertTokenizerFast
 
 # inputs
-inputs = {"train":["train.csv"],"val":["val.csv"],"test":["test.csv"],"my_dict":["my_dict.csv"]}
+inputs = {"train":[],"val":[],"test":[],"my_dict":[]}
 valohai.prepare(step="fine_tune", default_inputs=inputs)
 
 file_path = valohai.inputs('train').path()
@@ -26,9 +26,9 @@ tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 tokenizer.max_model_input_sizes
 
 # Format the train/validation/test sets
-train_encodings = tokenizer(train['Injury'].to_list(), truncation=True, padding=True)
-val_encodings = tokenizer(val['Injury'].to_list(), truncation=True, padding=True)
-test_encodings = tokenizer(test['Injury'].to_list(), truncation=True, padding=True)
+train_encodings = tokenizer(train['Injury'].to_list(), truncation=True, padding = "max_length")
+val_encodings = tokenizer(val['Injury'].to_list(), truncation=True, padding = "max_length")
+test_encodings = tokenizer(test['Injury'].to_list(), truncation=True, padding = "max_length")
 
 
 # make torch dataset
@@ -50,6 +50,7 @@ val_dataset = my_Dataset(val_encodings, val['Species_int'].to_list())
 test_dataset = my_Dataset(test_encodings, test['Species_int'].to_list())
 
 
+
 # Fine-tuning with Trainer
 from transformers import DistilBertForSequenceClassification, Trainer, TrainingArguments
 
@@ -60,10 +61,9 @@ training_args = TrainingArguments(
     per_device_eval_batch_size=4,
     weight_decay=0.01,
 )
-
 # The number of predicted labels must be specified with num_labels
 # .to('cuda') to do the training on the GPU
-model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=len(my_dict['Species'].to_list())).to('cuda')
+model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=len(mostcommon['index'].to_list())).to('cuda')
 
 trainer = Trainer(
     model=model,                         # the instantiated 🤗 Transformers model to be trained

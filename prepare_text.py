@@ -13,15 +13,16 @@ valohai.prepare(step="pepare_text", default_inputs=inputs)
 file_path = valohai.inputs('attacksminiprocessed').path()
 #attacks = pd.read_csv('attacksminiprocessed.csv')
 attacks = pd.read_csv(file_path)
-
-attacks['Species'] = pd.Categorical(attacks['Species'])
-mostcommon=attacks['Species'].value_counts().nlargest(40).to_frame('counts').reset_index()
+#attacks.size
+mostcommon=attacks['Species'].value_counts().nlargest(20).to_frame('counts').reset_index()
 #mostcommon
+
+#filter df to contain only the most common
 attacks=attacks[attacks.Species.isin(mostcommon['index'])]
-#attacks.head(50)
+
 # Transform your output to numeric
-attacks['Species_int'] = attacks['Species'].cat.codes
-my_dict=attacks[['Species','Species_int']]#.to_dict('dict')
+#attacks['Species_int'] = attacks['Species'].cat.codes
+attacks['Species_int']=attacks['Species'].apply(lambda x:mostcommon["index"].to_list().index(x))
 
 df=attacks[['Injury','Species','Species_int']]
 
@@ -40,7 +41,7 @@ train, val, test = map(lambda x:x.reset_index(drop=True), [train, val, test])
 
 #save dict for further use
 out_path = valohai.outputs().path('my_dict.csv')
-my_dict.to_csv(out_path)
+mostcommon.to_csv(out_path)
 
 out_path = valohai.outputs().path('train.csv')
 train.to_csv(out_path)
