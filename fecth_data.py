@@ -14,5 +14,5 @@ df=attacks[["Case Number", "Type","Activity","Fatal (Y/N)","Injury",'Species']]
 df=df[df["Species"].notnull()]
 df=df[df["Injury"].notnull()]
 
-path = valohai.outputs('attacksmini').path('attacksmini.csv')
+path = valohai.outputs('*').path('attacksmini.csv')
 df.to_csv(path)

@@ -3,19 +3,11 @@ import valohai
 import pickle
 import torch
 import pandas as pd
+from transformers import DistilBertTokenizerFast
 
 # inputs
-inputs = {"train_encodings":[],"val_encodings":[],"test_encodings":[],"train":[],"val":[],"test":[]}
+inputs = {"train":[],"val":[],"test":[],"my_dict":[]}
 valohai.prepare(step="fine_tune", default_inputs=inputs)
-
-file_to_read = open("train_encodings", "rb")
-train_encodings = pickle.load(file_to_read)
-
-file_to_read = open("val_encodings", "rb")
-val_encodings = pickle.load(file_to_read)
-
-file_to_read = open("test_encodings", "rb")
-test_encodings = pickle.load(file_to_read)
 
 file_path = valohai.inputs('train').path()
 train = pd.read_csv(file_path)
@@ -26,8 +18,20 @@ test = pd.read_csv(file_path)
 file_path = valohai.inputs('val').path()
 val = pd.read_csv(file_path)
 
-# make torch dataset
+file_path = valohai.inputs('my_dict').path()
+my_dict = pd.read_csv(file_path)
 
+# Load Distilbert's tokenizer
+tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
+tokenizer.max_model_input_sizes
+
+# Format the train/validation/test sets
+train_encodings = tokenizer(train['Injury'].to_list(), truncation=True, padding=True)
+val_encodings = tokenizer(val['Injury'].to_list(), truncation=True, padding=True)
+test_encodings = tokenizer(test['Injury'].to_list(), truncation=True, padding=True)
+
+
+# make torch dataset
 class my_Dataset(torch.utils.data.Dataset):
     def __init__(self, encodings, labels):
         self.encodings = encodings
@@ -59,7 +63,7 @@ training_args = TrainingArguments(
 
 # The number of predicted labels must be specified with num_labels
 # .to('cuda') to do the training on the GPU
-model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=len(df['Species'].to_list())).to('cuda')
+model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=len(my_dict['Species'].to_list())).to('cuda')
 
 trainer = Trainer(
     model=model,                         # the instantiated 🤗 Transformers model to be trained
@@ -69,7 +73,9 @@ trainer = Trainer(
 )
 
 trainer.train()
-trainer.save_model("shark_model")
+
+out_path = valohai.outputs().path('shark_model')
+trainer.save_model(out_path)
 
 
 # Accuracy metrics
@@ -77,7 +83,7 @@ predictions=trainer.predict(test_dataset)
 
 test_results=test.copy(deep=True)
 test_results["label_int_pred_transfer_learning"]=predictions.label_ids
-test_results['label_pred_transfer_learning']=test_results['label_int_pred_transfer_learning'].apply(lambda x:labels[x])
+test_results['label_pred_transfer_learning']=test_results['label_int_pred_transfer_learning'].apply(lambda x:my_dict[x])
 
 error_rate_sum_zs=len(test_results[test_results["label"]!=test_results["label_pred_transfer_learning"]])/len(test_results)
 

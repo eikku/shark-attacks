@@ -14,5 +14,5 @@ attacks=attacks[~attacks['Species'].str.contains('Questionable|Shark involvement
 # Set your model target as categorical
 attacks['Species'] = pd.Categorical(attacks['Species'])
 
-path = valohai.outputs('attacksminiprocessed').path('attacksminiprocessed.csv')
+path = valohai.outputs('*').path('attacksminiprocessed.csv')
 attacks.to_csv(path)
