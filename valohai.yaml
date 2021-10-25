@@ -10,7 +10,7 @@
       optional: false
 - step:
     name: fine_tune
-    image: python:3.7
+    image: pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
     command:
     - pip install -r requirements.txt
     - python ./fine_tune.py {parameters}
