@@ -8,17 +8,15 @@ def main(config) -> Pipeline:
     # Define the pipeline nodes.
     fetch = pipe.execution("fetch_data")
     process = pipe.execution("pre_process")
-    tokenize_text = pipe.execution("tokenize_text")
+    pepare_text = pipe.execution("pepare_text")
     fine_tune = pipe.execution("fine_tune")
 
     # Configure the pipeline, i.e. define the edges.
     fetch.output("*").to(process.input("attacksmini"))
-    process.output("*").to(tokenize_text.input("attacksminiprocessed"))
-    tokenize_text.output("*").to(fine_tune.input("train_encodings"))
-    tokenize_text.output("*").to(fine_tune.input("val_encodings"))
-    tokenize_text.output("*").to(fine_tune.input("test_encodings"))
-    tokenize_text.output("*").to(fine_tune.input("train"))
-    tokenize_text.output("*").to(fine_tune.input("val"))
-    tokenize_text.output("*").to(fine_tune.input("test"))
+    process.output("*").to(pepare_text.input("attacksminiprocessed"))
+    pepare_text.output("*").to(fine_tune.input("train"))
+    pepare_text.output("*").to(fine_tune.input("val"))
+    pepare_text.output("*").to(fine_tune.input("test"))
+    pepare_text.output("*").to(fine_tune.input("my_dict"))
 
     return pipe

@@ -15,17 +15,22 @@
     - pip install -r requirements.txt
     - python ./fine_tune.py {parameters}
     inputs:
-    - name: train_encodings
-      optional: true
-    - name: val_encodings
-      optional: true
-    - name: test_encodings
-      optional: true
     - name: train
       optional: true
     - name: val
       optional: true
     - name: test
+      optional: true
+    - name: my_dict
+      optional: true
+- step:
+    name: pepare_text
+    image: python:3.7
+    command:
+    - pip install -r requirements.txt
+    - python ./prepare_text.py {parameters}
+    inputs:
+    - name: attacksminiprocessed
       optional: true
 - step:
     name: pre_process
@@ -41,7 +46,7 @@
     image: python:3.7
     command:
     - pip install -r requirements.txt
-    - python ./tokenize_text.py {parameters}
+    - python ./prepare_text.py {parameters}
     inputs:
     - name: attacksminiprocessed
       optional: true
@@ -53,25 +58,19 @@
       target: pre_process.input.attacksmini
     - configuration: {}
       source: pre_process.output.*
-      target: tokenize_text.input.attacksminiprocessed
+      target: pepare_text.input.attacksminiprocessed
     - configuration: {}
-      source: tokenize_text.output.*
-      target: fine_tune.input.train_encodings
-    - configuration: {}
-      source: tokenize_text.output.*
-      target: fine_tune.input.val_encodings
-    - configuration: {}
-      source: tokenize_text.output.*
-      target: fine_tune.input.test_encodings
-    - configuration: {}
-      source: tokenize_text.output.*
+      source: pepare_text.output.*
       target: fine_tune.input.train
     - configuration: {}
-      source: tokenize_text.output.*
+      source: pepare_text.output.*
       target: fine_tune.input.val
     - configuration: {}
-      source: tokenize_text.output.*
+      source: pepare_text.output.*
       target: fine_tune.input.test
+    - configuration: {}
+      source: pepare_text.output.*
+      target: fine_tune.input.my_dict
     nodes:
     - name: fetch_data
       actions: []
@@ -83,10 +82,10 @@
       override: {}
       step: pre_process
       type: execution
-    - name: tokenize_text
+    - name: pepare_text
       actions: []
       override: {}
-      step: tokenize_text
+      step: pepare_text
       type: execution
     - name: fine_tune
       actions: []

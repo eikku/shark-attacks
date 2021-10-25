@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 import pickle
 
 inputs = {"attacksminiprocessed":[]}
-valohai.prepare(step="tokenize_text", default_inputs=inputs)
+valohai.prepare(step="pepare_text", default_inputs=inputs)
 
 file_path = valohai.inputs('attacksminiprocessed').path()
 #attacks = pd.read_csv('attacksminiprocessed.csv')
