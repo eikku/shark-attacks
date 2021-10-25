@@ -1,5 +1,4 @@
 pandas
 valohai-utils
 transformers
-pickle
 torch
