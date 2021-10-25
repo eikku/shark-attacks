@@ -2,3 +2,4 @@ pandas
 valohai-utils
 transformers
 torch
+sklearn
