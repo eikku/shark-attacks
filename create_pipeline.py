@@ -14,8 +14,11 @@ def main(config) -> Pipeline:
     # Configure the pipeline, i.e. define the edges.
     fetch.output("*").to(process.input("attacksmini"))
     process.output("*").to(tokenize_text.input("attacksminiprocessed"))
-    tokenize_text.output("*").to(fine_tune.input("train_dataset"))
-    tokenize_text.output("*").to(fine_tune.input("val_dataset"))
-    tokenize_text.output("*").to(fine_tune.input("test_dataset"))
+    tokenize_text.output("*").to(fine_tune.input("train_encodings"))
+    tokenize_text.output("*").to(fine_tune.input("val_encodings"))
+    tokenize_text.output("*").to(fine_tune.input("test_encodings"))
+    tokenize_text.output("*").to(fine_tune.input("train"))
+    tokenize_text.output("*").to(fine_tune.input("val"))
+    tokenize_text.output("*").to(fine_tune.input("test"))
 
     return pipe

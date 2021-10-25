@@ -5,7 +5,7 @@ import torch
 import pandas as pd
 
 # inputs
-inputs = {"train_dataset":[],"val_dataset":[],"test_dataset":[]}
+inputs = {"train_encodings":[],"val_encodings":[],"test_encodings":[],"train":[],"val":[],"test":[]}
 valohai.prepare(step="fine_tune", default_inputs=inputs)
 
 file_to_read = open("train_encodings", "rb")

@@ -13,11 +13,17 @@
     - pip install -r requirements.txt
     - python ./fine_tune.py {parameters}
     inputs:
-    - name: train_dataset
+    - name: train_encodings
       optional: true
-    - name: val_dataset
+    - name: val_encodings
       optional: true
-    - name: test_dataset
+    - name: test_encodings
+      optional: true
+    - name: train
+      optional: true
+    - name: val
+      optional: true
+    - name: test
       optional: true
 - step:
     name: pre_process
@@ -85,13 +91,22 @@
       target: tokenize_text.input.attacksminiprocessed
     - configuration: {}
       source: tokenize_text.output.*
-      target: fine_tune.input.train_dataset
+      target: fine_tune.input.train_encodings
     - configuration: {}
       source: tokenize_text.output.*
-      target: fine_tune.input.val_dataset
+      target: fine_tune.input.val_encodings
     - configuration: {}
       source: tokenize_text.output.*
-      target: fine_tune.input.test_dataset
+      target: fine_tune.input.test_encodings
+    - configuration: {}
+      source: tokenize_text.output.*
+      target: fine_tune.input.train
+    - configuration: {}
+      source: tokenize_text.output.*
+      target: fine_tune.input.val
+    - configuration: {}
+      source: tokenize_text.output.*
+      target: fine_tune.input.test
     nodes:
     - name: fetch_data
       actions: []
