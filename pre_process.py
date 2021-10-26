@@ -10,7 +10,7 @@ file_path = valohai.inputs('attacksmini').path()
 attacks = pd.read_csv(file_path)
 
 # remove where sharks were not involved
-attacks=attacks[~attacks['Species'].str.contains('Questionable|Shark involvement not confirmed|Shark involvement prior|No shark involvement')]
+attacks=attacks[~attacks['Species'].str.contains('Questionable|Shark involvement not confirmed|Shark involvement prior|No shark involvement|Invalid')]
 
 
 # Set your model target as categorical

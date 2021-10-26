@@ -14,7 +14,7 @@ file_path = valohai.inputs('attacksminiprocessed').path()
 #attacks = pd.read_csv('attacksminiprocessed.csv')
 attacks = pd.read_csv(file_path)
 #attacks.size
-mostcommon=attacks['Species'].value_counts().nlargest(20).to_frame('counts').reset_index().rename(columns={'index': 'Species'})
+mostcommon=attacks['Species'].value_counts().nlargest(25).to_frame('counts').reset_index().rename(columns={'index': 'Species'})
 #mostcommon
 
 #filter df to contain only the most common
@@ -43,6 +43,7 @@ train, val, test = map(lambda x:x.reset_index(drop=True), [train, val, test])
 #save dict for further use
 out_path = valohai.outputs().path('my_dict.csv')
 mostcommon.to_csv(out_path)
+#mostcommon.to_csv('my_dict.csv')
 
 out_path = valohai.outputs().path('train.csv')
 train.to_csv(out_path)
