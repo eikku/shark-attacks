@@ -21,6 +21,8 @@ val = pd.read_csv(file_path)
 file_path = valohai.inputs('my_dict').path()
 my_dict = pd.read_csv(file_path)
 
+my_dict = pd.read_csv('my_dict.csv')
+
 # Load Distilbert's tokenizer
 tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 tokenizer.max_model_input_sizes
@@ -63,7 +65,7 @@ training_args = TrainingArguments(
 )
 # The number of predicted labels must be specified with num_labels
 # .to('cuda') to do the training on the GPU
-model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=len(my_dict['index'].to_list())).to('cuda')
+model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=len(my_dict['Species'].to_list())).to('cuda')
 
 trainer = Trainer(
     model=model,                         # the instantiated 🤗 Transformers model to be trained

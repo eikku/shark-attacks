@@ -14,15 +14,16 @@ file_path = valohai.inputs('attacksminiprocessed').path()
 #attacks = pd.read_csv('attacksminiprocessed.csv')
 attacks = pd.read_csv(file_path)
 #attacks.size
-mostcommon=attacks['Species'].value_counts().nlargest(20).to_frame('counts').reset_index()
+mostcommon=attacks['Species'].value_counts().nlargest(20).to_frame('counts').reset_index().rename(columns={'index': 'Species'})
 #mostcommon
 
 #filter df to contain only the most common
-attacks=attacks[attacks.Species.isin(mostcommon['index'])]
+attacks=attacks[attacks.Species.isin(mostcommon['Species'])]
 
 # Transform your output to numeric
 #attacks['Species_int'] = attacks['Species'].cat.codes
-attacks['Species_int']=attacks['Species'].apply(lambda x:mostcommon["index"].to_list().index(x))
+attacks['Species_int']=attacks['Species'].apply(lambda x:mostcommon["Species"].to_list().index(x))
+
 
 df=attacks[['Injury','Species','Species_int']]
 
