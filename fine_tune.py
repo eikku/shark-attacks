@@ -63,7 +63,7 @@ training_args = TrainingArguments(
 )
 # The number of predicted labels must be specified with num_labels
 # .to('cuda') to do the training on the GPU
-model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=len(mostcommon['index'].to_list())).to('cuda')
+model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-uncased", num_labels=len(my_dict['index'].to_list())).to('cuda')
 
 trainer = Trainer(
     model=model,                         # the instantiated 🤗 Transformers model to be trained
