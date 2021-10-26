@@ -21,8 +21,6 @@ val = pd.read_csv(file_path)
 file_path = valohai.inputs('my_dict').path()
 my_dict = pd.read_csv(file_path)
 
-my_dict = pd.read_csv('my_dict.csv')
-
 # Load Distilbert's tokenizer
 tokenizer = DistilBertTokenizerFast.from_pretrained('distilbert-base-uncased')
 tokenizer.max_model_input_sizes
