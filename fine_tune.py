@@ -85,7 +85,7 @@ test_results=test.copy(deep=True)
 test_results["label_int_pred_transfer_learning"]=predictions.label_ids
 test_results['label_pred_transfer_learning']=test_results['label_int_pred_transfer_learning'].apply(lambda x:my_dict["Species"][x])
 
-error_rate_sum_zs=len(test_results[test_results["label"]!=test_results["label_pred_transfer_learning"]])/len(test_results)
+error_rate_sum_zs=len(test_results[test_results["Species"]!=test_results["label_pred_transfer_learning"]])/len(test_results)
 
 # Print out metrics
 with valohai.metadata.logger() as logger:
