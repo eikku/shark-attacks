@@ -60,16 +60,16 @@
       source: pre_process.output.*
       target: pepare_text.input.attacksminiprocessed
     - configuration: {}
-      source: pepare_text.output.*
+      source: pepare_text.output.train.csv
       target: fine_tune.input.train
     - configuration: {}
-      source: pepare_text.output.*
+      source: pepare_text.output.val.csv
       target: fine_tune.input.val
     - configuration: {}
-      source: pepare_text.output.*
+      source: pepare_text.output.test.csv
       target: fine_tune.input.test
     - configuration: {}
-      source: pepare_text.output.*
+      source: pepare_text.output.my_dict.csv
       target: fine_tune.input.my_dict
     nodes:
     - name: fetch_data
