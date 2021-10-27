@@ -75,8 +75,7 @@ trainer = Trainer(
 trainer.train()
 
 out_path = valohai.outputs().path('shark_model')
-trainer.save_pretrained(out_path)
-
+trainer.save_model(out_path)
 
 # Accuracy metrics
 predictions=trainer.predict(test_dataset)
