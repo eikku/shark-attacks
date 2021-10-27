@@ -75,7 +75,7 @@ trainer = Trainer(
 trainer.train()
 
 out_path = valohai.outputs().path('shark_model')
-trainer.save_model(out_path)
+trainer.save_pretrained(out_path)
 
 
 # Accuracy metrics
@@ -89,4 +89,4 @@ error_rate_sum_zs=len(test_results[test_results["Species"]!=test_results["label_
 
 # Print out metrics
 with valohai.metadata.logger() as logger:
-    logger.log("accuracy", error_rate_sum_zs)
+    logger.log("error_rate", error_rate_sum_zs)
