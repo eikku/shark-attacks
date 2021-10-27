@@ -6,7 +6,7 @@ import pandas as pd
 from transformers import DistilBertTokenizerFast
 
 # inputs
-inputs = {"data":[]}
+inputs = {"train":["train.csv"],,"val":["val.csv"],"test":["test.csv"],"my_dict":["my_dict.csv"]}
 valohai.prepare(step="fine_tune", default_inputs=inputs)
 
 file_path = valohai.inputs('train').path()
