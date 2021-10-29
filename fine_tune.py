@@ -60,6 +60,8 @@ training_args = TrainingArguments(
     per_device_train_batch_size=8,
     per_device_eval_batch_size=4,
     weight_decay=0.01,
+    eval_steps=10,                      #print every 50 instead of default 500
+    logging_steps=50,
 )
 # The number of predicted labels must be specified with num_labels
 # .to('cuda') to do the training on the GPU
@@ -68,7 +70,6 @@ model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-unc
 trainer = Trainer(
     model=model,                         # the instantiated 🤗 Transformers model to be trained
     args=training_args,                  # training arguments, defined above
-    eval_steps=10,                      #print every 50 instead of default 500 
     train_dataset=train_dataset,         # training dataset
     eval_dataset=val_dataset             # evaluation dataset
 )
