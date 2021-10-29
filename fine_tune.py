@@ -75,8 +75,8 @@ trainer = Trainer(
 )
 
 trainer.train()
-
-trainer.state.log_history
+with valohai.metadata.logger() as logger:
+    trainer.state.log_history
 
 #print evaluation metrics
 metrics=trainer.evaluate()
@@ -103,4 +103,3 @@ with valohai.metadata.logger() as logger:
     logger.log("eval_samples_per_second", metrics['eval_samples_per_second'])
     logger.log("eval_steps_per_second", metrics['eval_steps_per_second'])
     logger.log("epoch", metrics['epoch'])
-    logger.log("trainerlog", trainer.state.log_history)
