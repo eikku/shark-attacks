@@ -73,6 +73,8 @@ trainer = Trainer(
 )
 
 trainer.train()
+#print evaluation metrics
+trainer.evaluate()
 
 out_path = valohai.outputs().path('shark_model')
 trainer.save_model(out_path)
