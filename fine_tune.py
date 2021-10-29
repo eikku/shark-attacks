@@ -94,3 +94,8 @@ error_rate_sum_zs=len(test_results[test_results["Species"]!=test_results["label_
 # Print out metrics
 with valohai.metadata.logger() as logger:
     logger.log("error_rate", error_rate_sum_zs)
+    logger.log("eval_loss", metrics['eval_loss'])
+    logger.log("eval_runtime", metrics['eval_runtime'])
+    logger.log("eval_samples_per_second", metrics['eval_samples_per_second'])
+    logger.log("eval_steps_per_second", metrics['eval_steps_per_second'])
+    logger.log("epoch", metrics['epoch'])
