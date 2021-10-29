@@ -60,8 +60,8 @@ training_args = TrainingArguments(
     per_device_train_batch_size=8,
     per_device_eval_batch_size=4,
     weight_decay=0.01,
-    eval_steps=10,                      #print every 50 instead of default 500
-    logging_steps=50,
+    eval_steps=10,                      #print every 10 instead of default 500
+    logging_steps=10,
 )
 # The number of predicted labels must be specified with num_labels
 # .to('cuda') to do the training on the GPU
@@ -75,6 +75,8 @@ trainer = Trainer(
 )
 
 trainer.train()
+
+trainer.state.log_history
 
 #print evaluation metrics
 metrics=trainer.evaluate()
@@ -101,3 +103,4 @@ with valohai.metadata.logger() as logger:
     logger.log("eval_samples_per_second", metrics['eval_samples_per_second'])
     logger.log("eval_steps_per_second", metrics['eval_steps_per_second'])
     logger.log("epoch", metrics['epoch'])
+    logger.log("trainerlog", trainer.state.log_history)
