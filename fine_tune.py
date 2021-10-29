@@ -68,7 +68,7 @@ model = DistilBertForSequenceClassification.from_pretrained("distilbert-base-unc
 trainer = Trainer(
     model=model,                         # the instantiated 🤗 Transformers model to be trained
     args=training_args,                  # training arguments, defined above
-    save_steps=50,                         #print every 50 instead of default 500 
+    eval_steps=10,                      #print every 50 instead of default 500 
     train_dataset=train_dataset,         # training dataset
     eval_dataset=val_dataset             # evaluation dataset
 )
