@@ -75,12 +75,11 @@ trainer = Trainer(
 )
 
 trainer.train()
-with valohai.metadata.logger() as logger:
-    trainer.state.log_history
+metrics_train=trainer.state.log_history
 
 #print evaluation metrics
 metrics=trainer.evaluate()
-print(metrics)
+#print(metrics)
 
 out_path = valohai.outputs().path('shark_model')
 trainer.save_model(out_path)
@@ -103,3 +102,8 @@ with valohai.metadata.logger() as logger:
     logger.log("eval_samples_per_second", metrics['eval_samples_per_second'])
     logger.log("eval_steps_per_second", metrics['eval_steps_per_second'])
     logger.log("epoch", metrics['epoch'])
+
+for i in metrics_train:
+    with valohai.metadata.logger() as logger:
+        logger.log("iteration", i)
+        logger.log("learning_rate", metrics_train['learning_rate'])
