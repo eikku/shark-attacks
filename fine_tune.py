@@ -103,7 +103,9 @@ with valohai.metadata.logger() as logger:
     logger.log("eval_steps_per_second", metrics['eval_steps_per_second'])
     logger.log("epoch", metrics['epoch'])
 
-for i in range(3):
+
+array_len=len(metrics_train)
+for i in range(array_len):
     with valohai.metadata.logger() as logger:
         logger.log("iteration", i)
         logger.log("loss", metrics_train['loss'])
