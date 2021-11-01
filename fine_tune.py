@@ -108,6 +108,3 @@ array_len=len(metrics_train)
 for i in range(array_len):
     with valohai.metadata.logger() as logger:
         logger.log("iteration", i)
-        logger.log("loss", metrics_train[i]['loss'])
-        logger.log("learning_rate", metrics_train[i]['learning_rate'])
-        logger.log("epoch", metrics_train[i]['epoch'])
