@@ -11,4 +11,6 @@ There are the python scripts
 
 You can create the valohai.yaml file with [valohai-utils sdk](https://github.com/valohai/valohai-utils). You need to define each step like this ```vh yaml step fecth_data.py``` and then after the pipeline is created with ```vh yaml pipeline create_pipeline.py```.
 
-Requirements are naturally described in requirements.txt file.
+Requirements are naturally described in requirements.txt file.'
+
+Disclaimer: this is a repo made by DS used to POCs and yes there are prob way better & more efficient ways of using python. Feel free to make a pull request!
