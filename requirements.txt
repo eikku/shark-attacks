@@ -3,3 +3,4 @@ valohai-utils
 transformers
 torch
 sklearn
+whylogs
