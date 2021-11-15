@@ -16,7 +16,7 @@ writer = WhyLabsWriter("", formats=[])
 session = Session(project="demo-project", pipeline="demo-pipeline", writers=[writer])
 
 # Run whylogs on current data and upload to WhyLabs.
-with session.logger(tags={"datasetId": "shark-model"}) as ylog:
+with session.logger(tags={"datasetId": "model-1"}) as ylog:
   file_path = valohai.inputs('attacks').path()
   attacks = pd.read_csv(file_path,encoding='cp1252')
   ylog.log_dataframe(attacks)
