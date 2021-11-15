@@ -2,19 +2,19 @@ import os
 import pandas as pd
 import valohai
 
+inputs = {"attacks": "datum://017c9ddc-ce57-672e-9358-50a2ffb9115e"}
+valohai.prepare(step="fetch_data_why", default_inputs=inputs)
+
 from whylogs.app import Session
 from whylogs.app.writers import WhyLabsWriter
 
-os.environ["WHYLABS_API_KEY"] = "CSbpaIfbgY.vnwlAcI0HcxDcrfMXJR7SgagzjOC4ogKbR7hR6OaKbtr1CBleLKRb"
+os.environ["WHYLABS_API_KEY"] = WHYSECTRET
 os.environ["WHYLABS_DEFAULT_ORG_ID"] = "org-gCqMEm"
 
 # Adding the WhyLabs Writer to utilize WhyLabs platform
 writer = WhyLabsWriter("", formats=[])
 
 session = Session(project="demo-project", pipeline="demo-pipeline", writers=[writer])
-
-inputs = {"attacks": "datum://017c9ddc-ce57-672e-9358-50a2ffb9115e"}
-valohai.prepare(step="fetch_data", default_inputs=inputs)
 
 # Run whylogs on current data and upload to WhyLabs.
 with session.logger(tags={"datasetId": "shark-model"}) as ylog:
