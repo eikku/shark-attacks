@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import valohai
 
-inputs = {"attacks": "datum://017c9ddc-ce57-672e-9358-50a2ffb9115e"}
+inputs = {"attacks": "datum://017d23e4-8475-cbac-c06e-e23d4a9ae95b"}
 valohai.prepare(step="fetch_data_why", default_inputs=inputs)
 
 from whylogs.app import Session
