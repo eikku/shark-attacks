@@ -1,0 +1,32 @@
+import os
+import pandas as pd
+import valohai
+
+from whylogs.app import Session
+from whylogs.app.writers import WhyLabsWriter
+
+os.environ["WHYLABS_API_KEY"] = "CSbpaIfbgY.vnwlAcI0HcxDcrfMXJR7SgagzjOC4ogKbR7hR6OaKbtr1CBleLKRb"
+os.environ["WHYLABS_DEFAULT_ORG_ID"] = "org-gCqMEm"
+
+# Adding the WhyLabs Writer to utilize WhyLabs platform
+writer = WhyLabsWriter("", formats=[])
+
+session = Session(project="demo-project", pipeline="demo-pipeline", writers=[writer])
+
+inputs = {"attacks": "datum://017c9ddc-ce57-672e-9358-50a2ffb9115e"}
+valohai.prepare(step="fetch_data", default_inputs=inputs)
+
+# Run whylogs on current data and upload to WhyLabs.
+with session.logger(tags={"datasetId": "shark-model"}) as ylog:
+  file_path = valohai.inputs('attacks').path()
+  attacks = pd.read_csv(file_path,encoding='cp1252')
+  ylog.log_dataframe(attacks)
+
+attacks.columns = attacks.columns.str.strip()
+
+df=attacks[["Case Number", "Type","Activity","Fatal (Y/N)","Injury",'Species']]
+df=df[df["Species"].notnull()]
+df=df[df["Injury"].notnull()]
+
+path = valohai.outputs('*').path('attacksmini.csv')
+df.to_csv(path)

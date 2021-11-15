@@ -104,7 +104,7 @@ with valohai.metadata.logger() as logger:
     logger.log("epoch", metrics['epoch'])
 
 
-array_len=len(metrics_train)
+array_len=len(metrics_train)-1
 for i in range(array_len):
     with valohai.metadata.logger() as logger:
         logger.log("iteration", i)
