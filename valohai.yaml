@@ -18,6 +18,9 @@
     - name: attacks
       default: datum://017c9ddc-ce57-672e-9358-50a2ffb9115e
       optional: false
+    environment-variables:
+      - name: WHYSECTRET
+        default: ""
 - step:
     name: fine_tune
     image: pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
