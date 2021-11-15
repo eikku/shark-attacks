@@ -8,7 +8,6 @@ valohai.prepare(step="fetch_data_why", default_inputs=inputs)
 from whylogs.app import Session
 from whylogs.app.writers import WhyLabsWriter
 
-os.environ["WHYLABS_API_KEY"] = WHYSECTRET
 os.environ["WHYLABS_DEFAULT_ORG_ID"] = "org-gCqMEm"
 
 # Adding the WhyLabs Writer to utilize WhyLabs platform
