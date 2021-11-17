@@ -18,7 +18,7 @@ session = Session(project="demo-project", pipeline="demo-pipeline", writers=[wri
 # Run whylogs on current data and upload to WhyLabs.
 with session.logger(tags={"datasetId": "model-1"}) as ylog:
   file_path = valohai.inputs('attacks').path()
-  attacks = pd.read_csv(file_path,encoding='cp1252')
+  attacks = pd.read_csv(file_path)
   ylog.log_dataframe(attacks)
 
 attacks.columns = attacks.columns.str.strip()
