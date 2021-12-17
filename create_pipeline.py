@@ -9,7 +9,7 @@ def main(config) -> Pipeline:
     fetch = pipe.execution("fetch_data")
     process = pipe.execution("pre_process")
     pepare_text = pipe.execution("pepare_text")
-    fine_tune = pipe.execution("fine_tune")
+    fine_tune = pipe.execution("experiment")
 
     # Configure the pipeline, i.e. define the edges.
     fetch.output("*").to(process.input("attacksmini"))

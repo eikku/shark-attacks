@@ -1,0 +1,24 @@
+{
+    "os": "Darwin-20.6.0-x86_64-i386-64bit",
+    "python": "3.7.9",
+    "heartbeatAt": "2021-12-17T12:45:01.528294",
+    "startedAt": "2021-12-17T12:44:55.475374",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [
+        "-f",
+        "/Users/eija-leenakoponen/Library/Jupyter/runtime/kernel-68f003f6-d557-4d2c-a30d-58765bbfa19f.json"
+    ],
+    "state": "running",
+    "program": "<python with no main file>",
+    "git": {
+        "remote": "https://github.com/eikku/shark-attacks.git",
+        "commit": "135ebe7b21d471d73b77dcd8012ae9f907af378d"
+    },
+    "email": "eijaleena.koponen@gmail.com",
+    "root": "/Users/eija-leenakoponen/valohai/shark-attacks",
+    "host": "Eija-Leenas-MacBook-Pro.local",
+    "username": "eija-leenakoponen",
+    "executable": "/Users/eija-leenakoponen/valohai/shark-attacks/env/bin/python"
+}
