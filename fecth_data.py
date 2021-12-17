@@ -1,12 +1,15 @@
 import os
 import pandas as pd
 import valohai
+import wandb
 
 inputs = {"attacks": "datum://017c9ddc-ce57-672e-9358-50a2ffb9115e"}
 valohai.prepare(step="fetch_data", default_inputs=inputs)
 
 file_path = valohai.inputs('attacks').path()
 attacks = pd.read_csv(file_path,encoding='cp1252')
+
+wandb.log_artifact(file_path, name='data_artifact', type='my_dataset') 
 
 attacks.columns = attacks.columns.str.strip()
 
