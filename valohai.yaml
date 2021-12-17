@@ -19,8 +19,9 @@
       default: datum://017c9ddc-ce57-672e-9358-50a2ffb9115e
       optional: false
     environment-variables:
-      - name: WHYSECTRET
-        default: ""
+    - name: WHYSECTRET
+      default: ''
+      optional: true
 - step:
     name: fine_tune
     image: pytorch/pytorch:1.10.0-cuda11.3-cudnn8-runtime
@@ -29,13 +30,21 @@
     - python ./fine_tune.py {parameters}
     inputs:
     - name: train
-      optional: true
+      default:
+      - train.csv
+      optional: false
     - name: val
-      optional: true
+      default:
+      - val.csv
+      optional: false
     - name: test
-      optional: true
+      default:
+      - test.csv
+      optional: false
     - name: my_dict
-      optional: true
+      default:
+      - my_dict.csv
+      optional: false
 - step:
     name: pepare_text
     image: python:3.7
