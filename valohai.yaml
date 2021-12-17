@@ -1,4 +1,27 @@
 - step:
+    name: experiment
+    image: python:3.7
+    command:
+    - pip install -r requirements.txt
+    - python ./expriment_train.py {parameters}
+    inputs:
+    - name: train
+      default:
+      - train.csv
+      optional: false
+    - name: val
+      default:
+      - val.csv
+      optional: false
+    - name: test
+      default:
+      - test.csv
+      optional: false
+    - name: my_dict
+      default:
+      - my_dict.csv
+      optional: false
+- step:
     name: fetch_data
     image: python:3.7
     command:

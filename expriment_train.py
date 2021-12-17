@@ -11,7 +11,7 @@ wandb.init(project="huggin-project", entity="eikku")
 
 # inputs
 inputs = {"train":["train.csv"],"val":["val.csv"],"test":["test.csv"],"my_dict":["my_dict.csv"]}
-valohai.prepare(step="fine_tune", default_inputs=inputs)
+valohai.prepare(step="experiment", default_inputs=inputs)
 
 file_path = valohai.inputs('train').path()
 train = pd.read_csv(file_path)
