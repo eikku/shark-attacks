@@ -4,3 +4,4 @@ transformers
 torch
 sklearn
 whylogs
+wandb
