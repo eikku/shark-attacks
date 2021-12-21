@@ -6,20 +6,12 @@
     - python ./expriment_train.py {parameters}
     inputs:
     - name: train
-      default:
-      - train.csv
       optional: false
     - name: val
-      default:
-      - val.csv
       optional: false
     - name: test
-      default:
-      - test.csv
       optional: false
     - name: my_dict
-      default:
-      - my_dict.csv
       optional: false
 - step:
     name: fetch_data
@@ -106,16 +98,16 @@
       target: pepare_text.input.attacksminiprocessed
     - configuration: {}
       source: pepare_text.output.train.csv
-      target: experiment.input.train
+      target: fine_tune.input.train
     - configuration: {}
       source: pepare_text.output.val.csv
-      target: experiment.input.val
+      target: fine_tune.input.val
     - configuration: {}
       source: pepare_text.output.test.csv
-      target: experiment.input.test
+      target: fine_tune.input.test
     - configuration: {}
       source: pepare_text.output.my_dict.csv
-      target: experiment.input.my_dict
+      target: fine_tune.input.my_dict
     nodes:
     - name: fetch_data
       actions: []
@@ -132,8 +124,8 @@
       override: {}
       step: pepare_text
       type: execution
-    - name: experiment
+    - name: fine_tune
       actions: []
       override: {}
-      step: experiment
+      step: fine_tune
       type: execution
