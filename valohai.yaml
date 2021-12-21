@@ -98,16 +98,16 @@
       target: pepare_text.input.attacksminiprocessed
     - configuration: {}
       source: pepare_text.output.train.csv
-      target: fine_tune.input.train
+      target: experiment.input.train
     - configuration: {}
       source: pepare_text.output.val.csv
-      target: fine_tune.input.val
+      target: experiment.input.val
     - configuration: {}
       source: pepare_text.output.test.csv
-      target: fine_tune.input.test
+      target: experiment.input.test
     - configuration: {}
       source: pepare_text.output.my_dict.csv
-      target: fine_tune.input.my_dict
+      target: experiment.input.my_dict
     nodes:
     - name: fetch_data
       actions: []
@@ -124,8 +124,8 @@
       override: {}
       step: pepare_text
       type: execution
-    - name: fine_tune
+    - name: experiment
       actions: []
       override: {}
-      step: fine_tune
+      step: experiment
       type: execution
