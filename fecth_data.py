@@ -12,7 +12,7 @@ valohai.prepare(step="fetch_data", default_inputs=inputs)
 file_path = valohai.inputs('attacks').path()
 attacks = pd.read_csv(file_path,encoding='cp1252')
 
-wandb.log_artifact(attacks, name='data_artifact', type='my_dataset')
+wandb.log_artifact(file_path, name='data_artifact', type='my_dataset')
 wandb.log({"table": attacks})
 
 attacks.columns = attacks.columns.str.strip()
