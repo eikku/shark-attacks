@@ -13,10 +13,10 @@ wandb.init(project="huggin-project", entity="eikku")
 inputs = {"train":["train.csv"],"val":["val.csv"],"test":["test.csv"],"my_dict":["my_dict.csv"]}
 valohai.prepare(step="experiment", default_inputs=inputs)
 
-file_path = valohai.inputs('train').path()
+file_path = valohai.inputs("train").path()
 train = pd.read_csv(file_path)
 
-file_path = valohai.inputs('test').path()
+file_path = valohai.inputs("test").path()
 test = pd.read_csv(file_path)
 
 file_path = valohai.inputs('val').path()
@@ -106,7 +106,7 @@ with valohai.metadata.logger() as logger:
     logger.log("epoch", metrics['epoch'])
 
 
-array_len=len(metrics_train)-1
+array_len=len(metrics_train)-2
 for i in range(array_len):
     with valohai.metadata.logger() as logger:
         logger.log("iteration", i)
